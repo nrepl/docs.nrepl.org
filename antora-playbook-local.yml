@@ -4,6 +4,9 @@
 site:
   title: nREPL
   start_page: nrepl::index.adoc
+antora:
+  extensions:
+  - ./extensions/master-display-version.js
 content:
   sources:
   - url: ../nrepl

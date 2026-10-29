@@ -52,6 +52,11 @@ its tag, so the documentation for that version gets built:
   start_path: doc
 ----
 
+nREPL's `doc/antora.yml` takes the docs version from the tag (`v1.9.0` becomes
+`1.9`), so a release doesn't touch it, and leaves `master` unversioned.
+`extensions/master-display-version.js` calls that version "master" in the
+version menu.
+
 The site is rebuilt on every push to this repository, once a day, and whenever
 the nrepl repository asks for it, so doc changes on nREPL's `master` show up
 without anyone triggering a build.
