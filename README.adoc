@@ -69,6 +69,39 @@ $ npm run antora -- antora-playbook-local.yml
 
 Only that one branch is built, so the version menu stays empty.
 
+== The Theme
+
+The site uses Antora's default UI with the files under `supplemental-ui` on
+top of it, so it matches https://nrepl.org: the same colors, header and logo,
+plus a dark theme.
+
+* The default UI compiles its CSS variables away, so
+`supplemental-ui/css/site-extra.css` restates each of its color rules with the
+palette at the top of the file. The colors are written as
+`light-dark(light, dark)`, so they follow the system preference, or the theme
+picked with the toggle in the header (it's saved in `localStorage`, same as on
+nrepl.org).
+* The code colors have the same names as in nrepl.org's
+`assets/css/main.css`. If they change there, copy them over.
+* The few dark theme values that aren't colors (a filter for the default UI's
+icon images, the chevron of the version menu, and the logo on each version's
+home page, which has a dark wordmark) are set twice: once for the system
+preference and once for the toggle. A new one has to go in both places.
+* `head-meta.hbs` loads `site-extra.css` after the tabs and DocSearch
+stylesheets, so its rules win, and applies a saved theme before the page is
+drawn. `footer-content.hbs` has the toggle's click handler.
+* Every file under `supplemental-ui` has to be listed in both playbooks.
+
+The UI bundle is a snapshot of the default UI's `master`, so its fixes arrive
+on their own. The flip side is that something new it adds with a color of its
+own shows up in the stock colors until a rule for it is added here. Its
+https://gitlab.com/antora/antora-ui-default/-/tree/master/src/css[stylesheets]
+show which rules set colors, and `vars.css` there says what each color is for.
+
+Forking the default UI would have made the colors a matter of editing
+`vars.css`, but the fork would have to be built with the UI's own (rather
+old) toolchain and kept up with upstream by hand.
+
 == Troubleshooting
 
 The most common mistake is forgetting to set the docs version in `doc/antora.yml`

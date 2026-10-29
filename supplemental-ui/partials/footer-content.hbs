@@ -13,3 +13,14 @@
  });
 </script>
 <script async src="{{uiRootPath}}/js/vendor/tabs.js"></script>
+<script>
+  // Light or dark, overriding the system preference once picked.
+  document.querySelector(".theme-toggle").addEventListener("click", function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  });
+</script>

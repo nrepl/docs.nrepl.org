@@ -1,3 +1,119 @@
+/* The docs in the colors of nrepl.org. The default UI bakes its colors into
+   its stylesheet, so the rules below restate the ones that set a color, with
+   the palette from :root. The palette follows the system's light or dark
+   preference, or the theme picked with the toggle in the header. */
+
+:root {
+  color-scheme: light dark;
+
+  --grad: linear-gradient(90deg, #07a4fd, #3fd0c9 55%, #96fd9a);
+
+  --page: light-dark(#ffffff, #0c1117);
+  --panel: light-dark(#f6f8fa, #121921);
+  --raised: light-dark(#eaeff4, #1a232d);
+  --text: light-dark(#17202b, #e3e8ee);
+  --heading: light-dark(#0c1117, #f3f6f9);
+  --muted: light-dark(#566271, #9aa6b3);
+  --rule: light-dark(#dde4eb, #222c37);
+  --thumb: light-dark(#c3ccd6, #34414f);
+  --link: light-dark(#0670b8, #5cc5ff);
+  --link-hover: light-dark(#0a7d5a, #96fd9a);
+  --topbar: light-dark(rgba(255, 255, 255, 0.85), rgba(12, 17, 23, 0.85));
+
+  --tip: light-dark(#0a7d5a, #6be6a6);
+  --warning: light-dark(#b45f06, #f2a66b);
+  --important: light-dark(#c62828, #ff8a80);
+  --caution: light-dark(#8e3f9a, #d7a6ff);
+
+  /* Code blocks are dark in both themes, like the windows on nrepl.org,
+     and their colors have the same names as there. */
+  --w-bg: #0b1016;
+  --w-line: #1e2934;
+  --w-text: #d8dfe7;
+  --w-dim: #74828f;
+  --w-client: #3cb2ff;
+  --w-server: #6be6a6;
+  --w-k: #84c9ff;
+  --w-s: #e9c47f;
+  --w-n: #f2a66b;
+  --w-p: #8995a2;
+  --w-b: #ff7cb9;
+
+  /* What can't be a color: the default UI's icons are dark images. The dark
+     chevron is drawn in the dark --muted. */
+  --icon-filter: none;
+  --chevron: url(../img/chevron.svg);
+  --chevron-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath fill='%239aa6b3' d='M3.67 6.59 1.46 8.62 15 23.37 28.54 8.62 26.33 6.59 15 18.76Z'/%3E%3C/svg%3E");
+  --logo: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --icon-filter: invert(1);
+    --chevron: var(--chevron-dark);
+    --logo: url(../img/logo-dark.svg);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --icon-filter: invert(1);
+  --chevron: var(--chevron-dark);
+  --logo: url(../img/logo-dark.svg);
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+body { background: var(--page); color: var(--text); }
+html { scrollbar-color: var(--thumb) var(--panel); }
+body * { scrollbar-color: var(--thumb) transparent; }
+html::-webkit-scrollbar { background-color: var(--panel); }
+::-webkit-scrollbar-thumb { background-color: var(--thumb); }
+::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+
+/* The header, like the bar at the top of nrepl.org */
+
+.navbar {
+  background: var(--topbar);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  color: var(--text);
+  box-shadow: 0 1px 0 var(--rule);
+}
+.navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--grad);
+}
+.navbar-brand .navbar-item { color: var(--text); }
+.navbar-brand .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.navbar-brand .brand img { width: 26px; height: 26px; }
+.navbar-brand .navbar-item a.docs { color: var(--muted); font-weight: 400; }
+.navbar-brand .navbar-item a.docs:hover { color: var(--text); }
+.navbar-burger span { background-color: var(--text); }
+.navbar-item, .navbar-link { color: var(--text); }
+
+.theme-toggle {
+  display: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--text); }
+.js .theme-toggle { display: grid; }
+
 .navbar-brand .navbar-item + .navbar-item {
   -ms-flex-positive: 1;
   -webkit-box-flex: 1;
@@ -14,6 +130,15 @@
   }
 }
 
+@media screen and (max-width: 1023.5px) {
+  .navbar-menu {
+    background: var(--page);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 1px 0 var(--rule);
+  }
+  .navbar-menu a.navbar-item:hover,
+  .navbar-menu .navbar-link:hover { background: var(--panel); }
+}
+
 @media screen and (min-width: 1024px) {
   .navbar-brand {
     -ms-flex-positive: 1;
@@ -26,4 +151,196 @@
     -webkit-box-flex: 0;
     flex-grow: 0;
   }
+
+  .navbar-end > .navbar-item,
+  .navbar-end .navbar-link { color: var(--muted); }
+  .navbar-end > a.navbar-item:hover,
+  .navbar-end .navbar-link:hover,
+  .navbar-end .navbar-item.has-dropdown:hover .navbar-link {
+    background: none;
+    color: var(--text);
+  }
+  .navbar-dropdown { background: var(--page); border-color: var(--rule); }
+  .navbar-dropdown a.navbar-item:hover { background: var(--panel); }
 }
+
+/* Search. The [data-theme] selector outranks DocSearch's own dark theme,
+   which switches on the same attribute as the toggle. */
+
+:root,
+:root[data-theme] {
+  --docsearch-primary-color: var(--link);
+  --docsearch-text-color: var(--text);
+  --docsearch-muted-color: var(--muted);
+  --docsearch-icon-color: var(--muted);
+  --docsearch-logo-color: var(--link);
+  --docsearch-container-background: light-dark(rgba(23, 32, 43, 0.45), rgba(5, 8, 12, 0.75));
+  --docsearch-modal-background: var(--panel);
+  --docsearch-modal-shadow: 0 0 0 1px var(--rule), 0 12px 32px rgba(0, 0, 0, 0.3);
+  --docsearch-searchbox-background: var(--panel);
+  --docsearch-searchbox-focus-background: var(--page);
+  --docsearch-hit-color: var(--text);
+  --docsearch-hit-active-color: var(--page);
+  --docsearch-hit-background: var(--page);
+  --docsearch-hit-shadow: 0 0 0 1px var(--rule);
+  --docsearch-key-gradient: linear-gradient(-225deg, var(--raised), var(--page));
+  --docsearch-key-shadow: inset 0 -2px 0 0 var(--rule), inset 0 0 1px 1px var(--rule);
+  --docsearch-key-pressed-shadow: inset 0 -1px 0 0 var(--rule), inset 0 0 1px 1px var(--rule);
+  --docsearch-footer-background: var(--page);
+  --docsearch-footer-shadow: 0 -1px 0 var(--rule);
+}
+
+/* The navigation, the toolbar above the page and the footer */
+
+.nav { background: var(--panel); box-shadow: 1px 0 0 var(--rule); }
+.nav-menu h3.title { color: var(--text); }
+.is-current-page > .nav-link { color: var(--link); }
+.nav-panel-explore { background: var(--panel); }
+.nav-panel-explore .context { color: var(--muted); box-shadow: 0 -1px 0 var(--rule); }
+.nav-panel-explore .context .version::after { background-image: var(--chevron); }
+.nav-panel-explore .components { box-shadow: inset 0 1px 5px var(--rule); background: var(--raised); }
+.nav-panel-explore .component .version a { background: var(--rule); color: var(--text); }
+.nav-panel-explore .component .is-current a { background: var(--text); color: var(--page); }
+.nav-menu-toggle,
+.nav-toggle,
+.home-link { filter: var(--icon-filter); }
+
+.toolbar {
+  color: var(--muted);
+  background-color: var(--page);
+  box-shadow: 0 1px 0 var(--rule);
+}
+.toolbar .edit-this-page a { color: var(--muted); }
+.page-versions .version-menu-toggle { background-image: var(--chevron); }
+.page-versions .version-menu { background: var(--raised); }
+.page-versions .version.is-missing { color: var(--muted); }
+
+.toc-menu { color: var(--muted); }
+.toc .toc-menu h3 { color: var(--text); }
+.toc .toc-menu a { border-left-color: var(--rule); }
+.toc .toc-menu a:hover { color: var(--link); }
+.toc .toc-menu a.is-active { border-left-color: var(--link); color: var(--text); }
+.sidebar.toc .toc-menu a:focus { background: var(--panel); }
+
+nav.pagination { border-top-color: var(--rule); }
+nav.pagination span::before,
+nav.pagination a::before,
+nav.pagination a::after { color: var(--muted); }
+
+footer.footer {
+  background-color: var(--panel);
+  color: var(--muted);
+  box-shadow: 0 -1px 0 var(--rule);
+}
+.footer a { color: var(--text); }
+
+/* The page */
+
+.doc { color: var(--text); }
+.doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 { color: var(--heading); }
+.doc h1.page::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+  background: var(--grad);
+}
+.doc h1.sect0 { background: var(--raised); }
+.doc h2:not(.discrete) { border-bottom-color: var(--rule); }
+.doc hr { border-color: var(--rule); }
+.doc a { color: var(--link); }
+.doc a:hover { color: var(--link-hover); }
+/* Every version's home page has the logo as a PNG with a dark wordmark. */
+.doc .imageblock img[src$="logo-w1280.png"] { content: var(--logo); }
+
+.doc p code,
+.doc thead code,
+.doc .colist > table code {
+  color: var(--text);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.doc kbd {
+  background: var(--panel);
+  border-color: var(--thumb);
+  box-shadow: 0 1px 0 var(--thumb), 0 0 0 0.1em var(--page) inset;
+}
+
+.doc table.tableblock,
+.doc table.tableblock > * > tr > * { border-color: var(--rule); }
+.doc table.stripes-all > tbody > tr,
+.doc table.stripes-odd > tbody > tr:nth-of-type(odd),
+.doc table.stripes-even > tbody > tr:nth-of-type(even),
+.doc table.stripes-hover > tbody > tr:hover { background: var(--panel); }
+.doc table.tableblock > tfoot { background: var(--panel); }
+
+.doc .admonitionblock td.content { background: var(--panel); }
+.doc .admonitionblock td.icon i { color: var(--page); }
+.doc .admonitionblock td.icon i.icon-caution { background-color: var(--caution); }
+.doc .admonitionblock td.icon i.icon-important { background-color: var(--important); }
+.doc .admonitionblock td.icon i.icon-note { background-color: var(--link); }
+.doc .admonitionblock td.icon i.icon-tip { background-color: var(--tip); }
+.doc .admonitionblock td.icon i.icon-warning { background-color: var(--warning); }
+
+#preamble .abstract blockquote {
+  background: var(--raised);
+  border-left-color: var(--rule);
+  color: var(--text);
+}
+.doc .quoteblock,
+.doc .verseblock {
+  background: var(--panel);
+  border-left-color: var(--thumb);
+  color: var(--muted);
+}
+.doc .quoteblock .attribution { color: var(--muted); }
+.doc .admonitionblock .title,
+.doc .exampleblock .title,
+.doc .imageblock .title,
+.doc .literalblock .title,
+.doc .listingblock .title,
+.doc .openblock .title,
+.doc .videoblock .title,
+.doc table.tableblock caption,
+.doc details.result > summary { color: var(--muted); }
+.doc .exampleblock > .content,
+.doc details.result > .content { background: var(--page); border-color: var(--rule); }
+.doc .sidebarblock { background: var(--raised); }
+
+.tablist > ul li,
+.tabpanel { border-color: var(--rule); }
+.tablist > ul li,
+.tabpanel,
+.tabs.is-loading .tablist li:first-child::after,
+.tabs:not(.is-loading) .tablist li.is-selected::after { background-color: var(--page); }
+.tabs.is-loading .tablist li:not(:first-child),
+.tabs:not(.is-loading) .tablist li:not(.is-selected) { background-color: var(--panel); color: var(--muted); }
+
+/* Code blocks */
+
+.doc pre.highlight > code,
+.doc .listingblock pre:not(.highlight),
+.doc .literalblock pre {
+  background: var(--w-bg);
+  box-shadow: inset 0 0 0 1px var(--w-line);
+  color: var(--w-text);
+}
+.doc .source-toolbox { color: var(--w-dim); }
+.doc .source-toolbox .copy-toast { background-color: var(--w-text); color: var(--w-bg); }
+.doc .source-toolbox .copy-toast::after { border-left-color: var(--w-text); }
+
+.hljs-comment, .hljs-quote { color: var(--w-dim); }
+.hljs-keyword, .hljs-selector-tag, .hljs-subst { color: var(--w-b); }
+.hljs-number, .hljs-literal, .hljs-variable, .hljs-template-variable, .hljs-tag .hljs-attr { color: var(--w-n); }
+.hljs-string, .hljs-doctag { color: var(--w-s); }
+.hljs-title, .hljs-section, .hljs-selector-id { color: var(--w-client); }
+.hljs-type, .hljs-class .hljs-title { color: var(--w-k); }
+.hljs-tag, .hljs-name, .hljs-attribute { color: var(--w-server); }
+.hljs-regexp, .hljs-link { color: var(--w-server); }
+.hljs-symbol, .hljs-bullet { color: var(--w-k); }
+.hljs-built_in, .hljs-builtin-name { color: var(--w-client); }
+.hljs-meta { color: var(--w-p); }
+.hljs-deletion { background: rgba(255, 124, 185, 0.15); }
+.hljs-addition { background: rgba(107, 230, 166, 0.15); }

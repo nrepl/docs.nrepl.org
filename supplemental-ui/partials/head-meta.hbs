@@ -1,5 +1,14 @@
-<link rel="stylesheet" href="{{uiRootPath}}/css/site-extra.css">
 <link rel="stylesheet" href="{{uiRootPath}}/css/vendor/tabs.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+<link rel="stylesheet" href="{{uiRootPath}}/css/site-extra.css">
 <link rel="icon" href="{{uiRootPath}}/img/favicon.ico" type="image/x-icon">
 <meta name="algolia-site-verification" content="DBEDF1C5662D0F6F">
+<script>
+  // A theme picked with the toggle in the header wins over the system's, and
+  // has to be in place before the page is drawn.
+  document.documentElement.classList.add("js");
+  try {
+    var theme = localStorage.getItem("theme");
+    if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+  } catch (e) {}
+</script>

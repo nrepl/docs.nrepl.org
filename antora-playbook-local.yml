@@ -27,6 +27,10 @@ ui:
     contents: ./supplemental-ui/css/site-extra.css
   - path: img/favicon.ico
     contents: ./supplemental-ui/img/favicon.ico
+  - path: img/icon.svg
+    contents: ./supplemental-ui/img/icon.svg
+  - path: img/logo-dark.svg
+    contents: ./supplemental-ui/img/logo-dark.svg
   - path: partials/head-meta.hbs
     contents: ./supplemental-ui/partials/head-meta.hbs
   - path: partials/header-content.hbs

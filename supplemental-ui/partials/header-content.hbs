@@ -2,9 +2,8 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <div class="navbar-item">
-        <a href="https://nrepl.org">nREPL</a>
-        <span class="separator">//</span>
-        <a href="{{or site.url (or siteRootUrl siteRootPath)}}">Docs</a>
+        <a class="brand" href="https://nrepl.org"><img src="{{uiRootPath}}/img/icon.svg" alt="">nREPL</a>
+        <a class="docs" href="{{or site.url (or siteRootUrl siteRootPath)}}">Docs</a>
       </div>
       <div class="navbar-item">
         <div id="docsearch"></div>
@@ -35,6 +34,11 @@
             <a class="navbar-item" href="/nrepl/about/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://opencollective.com/nrepl">Open Collective</a>
           </div>
+        </div>
+        <div class="navbar-item">
+          <button type="button" class="theme-toggle" aria-label="Switch between light and dark theme" title="Switch between light and dark theme">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+          </button>
         </div>
       </div>
     </div>
