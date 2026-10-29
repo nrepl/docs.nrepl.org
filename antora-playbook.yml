@@ -1,6 +1,6 @@
 site:
   title: nREPL
-  url: https://nrepl.org/
+  url: https://docs.nrepl.org/
   start_page: nrepl::index.adoc
   keys:
     google_analytics: 'G-H1N0TJ83PW'
