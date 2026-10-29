@@ -41,15 +41,19 @@ $ docker run --rm -t -u $(id -u) -v $(pwd):/antora antora/antora:3.2.0 --fetch a
 
 == Updating the Playbook
 
-When cutting a new release you'll have to update `antora-playbook.yml` to mention
-its tag, so the documentation for that version gets built:
+The site only builds the nREPL tags listed in `antora-playbook.yml`, and
+nREPL's release workflow adds them: it sends a `release` event with the new
+tag to this repository, and the publish workflow adds the tag with
+`add-release.mjs`, pushes the playbook change and publishes the site. A patch
+release replaces the tag of its minor version, since both are published as
+the same docs version. Prereleases aren't sent.
+
+You can also add a release by running the publish workflow manually with a
+tag, or by running the script locally and committing the result:
 
 [source]
 ----
-- url: https://github.com/nrepl/nrepl.git
-  branches: master
-  tags: ['v1.7.0', 'v1.8.0']
-  start_path: doc
+$ node add-release.mjs v1.9.0
 ----
 
 nREPL's `doc/antora.yml` takes the docs version from the tag (`v1.9.0` becomes
