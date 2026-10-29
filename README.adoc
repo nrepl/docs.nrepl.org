@@ -102,9 +102,10 @@ Forking the default UI would have made the colors a matter of editing
 `vars.css`, but the fork would have to be built with the UI's own (rather
 old) toolchain and kept up with upstream by hand.
 
-== Troubleshooting
+== Fixing the Docs of a Release
 
-The most common mistake is forgetting to set the docs version in `doc/antora.yml`
-on the release commit (or to reset it to `~` afterwards). The former leaves the
-release out of the version menu for good, since the tag can't be changed; the
-latter makes Antora complain that two branches claim the same version.
+A release tag can't be changed, so a fix to the docs of a release that's
+already out goes on an `-antora` tag: a commit with the fix on top of the
+release tag, tagged `vX.Y.Z-antora`, which replaces the release tag in the
+playbook. nREPL's release workflows skip `-antora` tags, so pushing one
+doesn't publish anything but the docs.
